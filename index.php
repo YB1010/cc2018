@@ -12,16 +12,19 @@
 		echo $client;
 	}
 	else { ?>
-		<input type='date' id='available_date'/>
-		<select id='available_times'></select>
-		<button id='submit'>Schedule me!</button>
+	
+		<button id="LogOut" >Log Out</button>
+		<h3>Up comming event:</h3>
 		<p id='dump'></p>
 		
 		<script>
+			document.getElementById("LogOut").onclick = function () {
+			location.href = "http://localhost/cc2018/logout.php";
+			};
 			$(document).ready(function(){
-				document.getElementById('available_date').addEventListener('change', function(){
+				
 					get_times(this);
-				});
+				
 				//document.getElementById('submit').addEventListener('click', function(){
 				//	schedule_me(this);
 				//});

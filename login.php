@@ -12,7 +12,7 @@ function getClient()
     $client->setScopes(Google_Service_Calendar::CALENDAR);
     $client->setAuthConfig('client_secret_690726870203-mt1s63knt375nt9j97s0pbrvjbc7hkfe.apps.googleusercontent.com.json');
     $client->setAccessType('offline');
-
+	$client->setPrompt('select_account');
     // Load previously authorized token from a file, if it exists.
     $tokenPath = 'token.json';
     if (file_exists($tokenPath)) {
