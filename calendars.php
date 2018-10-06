@@ -16,6 +16,8 @@ function get_times(){
 	$client = getClient();
 	$service = new Google_Service_Calendar($client);
 	$calendarId = 'primary';
+	
+	//config for return results
 	$optParams = array(
 		'maxResults' => 10,
 		'orderBy' => 'startTime',
@@ -38,17 +40,37 @@ function get_times(){
 			$the_html.="=======<br/ >";
 			$start = $event->start->dateTime;
 			if(empty($start)){
-				//if no specific dateTime, date will as start
+				//if no specific dateTime, date will as date
 				$start = $event->start->date;
 			}
 			$the_html.=$event->getSummary();
 			$the_html.="<br/ >";
-			if($event->getLocation()){
+			$the_html.=$start;
+			$the_html.="<br/ >";
+			if($event->getLocation()!=""){
 				$locationStr=$event->getLocation();
 				$the_html.=$event->getLocation();
 				$the_html.="<br/ >";
-				$latLng=LocationStrConverter($locationStr,"AIzaSyDuW-ICkzafAno32IWkyJTHJTHBCEdtXGQ");
-				$the_html.=$latLng[0]."|".$latLng[1];
+				
+				$dateTime = explode("+",$start);
+				$json_url = "https://on0gw9htij.execute-api.us-east-1.amazonaws.com/prod/?address=".str_replace(" ","+",$event->getLocation())."&time=".$dateTime[0];
+				
+				$json = file_get_contents($json_url);
+				$data = json_decode($json, true); 
+				if(array_key_exists("summary",$data))
+				{
+					$the_html.="<img src=\"".$data["iconUrl"]."\" />";
+					$the_html.="<br/>";
+					$the_html.="temperature: ".$data["temperature"];
+					$the_html.="<br/>";
+					$the_html.="Summary: ".$data["summary"];
+				}
+				else
+				{
+					$the_html.="Invalid address";
+				}
+				
+
 			}
 			else{
 				$the_html.='In order to get your event weather, plz update an address in your event.';
@@ -58,14 +80,6 @@ function get_times(){
 	}
 	return $the_html;
 }
-function LocationStrConverter($locationStr,$apikey){
-	$str=str_replace(" ","+",$locationStr);
-	$urlHead="https://maps.googleapis.com/maps/api/geocode/json?address=";
-	$url=$urlHead.$str."&key=".$apikey;
-	$json = file_get_contents($url);
-	$obj = json_decode($json);
-	$returnArr=array($obj->results[0]->geometry->location->lat,$obj->results[0]->geometry->location->lng);
-	return $returnArr;
-}
+
 
 ?>

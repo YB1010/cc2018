@@ -28,7 +28,7 @@ function getClient()
         } else {
             if(!credentials_in_browser()){
 				$authUrl = $client->createAuthUrl();
-				return "<a href='$authUrl'>Click Here to link ur google</a>";
+				return "<a href='$authUrl'>Click Here to link ur google</a><p> <a href=\"index.php?logout=\'1\'\" style=\"color: red;\">logout</a> </p>";
 			}
 			$authCode = $_GET['code'];
             // Exchange authorization code for an access token.

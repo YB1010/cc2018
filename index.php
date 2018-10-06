@@ -6,11 +6,26 @@
 </head>
 <body>
 	<?php
+
+  session_start(); 
+
+  if (!isset($_SESSION['username'])) {
+  	$_SESSION['msg'] = "You must log in first";
+  	header('location: userlogin.php');
+  }
+  if (isset($_GET['logout'])) {
+  	session_destroy();
+  	unset($_SESSION['username']);
+  	header("location: userlogin.php");
+  }
+
 	require_once('./login.php');
-	$client = getclient();
+	$client = getclient(); // Call getclient in login.php to login
 	if(! is_a($client,"Google_Client")){
 		echo $client;
 	}
+	
+	//if loged
 	else { ?>
 	
 		<button id="LogOut" >Log Out</button>
@@ -18,6 +33,7 @@
 		<p id='dump'></p>
 		
 		<script>
+			//logout function
 			document.getElementById("LogOut").onclick = function () {
 			location.href = "http://localhost/cc2018/logout.php";
 			};
@@ -30,6 +46,7 @@
 				//});
 			});
 			
+			//get the calendars
 			function get_times(date_picker){
 				console.log("121123");
 				var date = date_picker.value;
