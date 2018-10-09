@@ -1,10 +1,10 @@
 <?php
+session_start(); 
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
 
 	require_once('./login.php');
 	$the_html = $_GET['action']();
 	echo $the_html;
-	echo date('c');
 	
 }
 else{
@@ -37,20 +37,22 @@ function get_times(){
 		foreach($results->getItems() as $event)
 		{	
 			$locationStr='';
-			$the_html.="=======<br/ >";
+			
+			$the_html.="<div class=\"ui segment\">
+			<div class=\"ui stackable four column grid\">
+			<div class=\"column\ style=\"width:69%;\">";
 			$start = $event->start->dateTime;
 			if(empty($start)){
 				//if no specific dateTime, date will as date
 				$start = $event->start->date;
 			}
-			$the_html.=$event->getSummary();
+			$the_html.="<h3> Description:".$event->getSummary();
 			$the_html.="<br/ >";
-			$the_html.=$start;
+			$the_html.="<h3>Date: ".$start;
 			$the_html.="<br/ >";
 			if($event->getLocation()!=""){
 				$locationStr=$event->getLocation();
-				$the_html.=$event->getLocation();
-				$the_html.="<br/ >";
+				$the_html.="<h3>Location: ".$event->getLocation()."<h3>";
 				
 				$dateTime = explode("+",$start);
 				$json_url = "https://on0gw9htij.execute-api.us-east-1.amazonaws.com/prod/?address=".str_replace(" ","+",$event->getLocation())."&time=".$dateTime[0];
@@ -59,15 +61,16 @@ function get_times(){
 				$data = json_decode($json, true); 
 				if(array_key_exists("summary",$data))
 				{
-					$the_html.="<img src=\"".$data["iconUrl"]."\" />";
 					$the_html.="<br/>";
-					$the_html.="temperature: ".$data["temperature"];
-					$the_html.="<br/>";
-					$the_html.="Summary: ".$data["summary"];
+					$the_html.="<h3>temperature: ".$data["temperature"];
+					$the_html.="</h3><br/>";
+					$the_html.="<h3>Summary: ".$data["summary"]."</h3>";
+					
+					$the_html.="</div><div class=\"column\"><img width=\"100%\" src=\"".$data["iconUrl"]."\" />";
 				}
 				else
 				{
-					$the_html.="Invalid address";
+					$the_html.="Invalid address/No specific time";
 				}
 				
 
@@ -75,7 +78,7 @@ function get_times(){
 			else{
 				$the_html.='In order to get your event weather, plz update an address in your event.';
 			}
-			$the_html.="<br/ >";
+			$the_html.="</div></div></div>";
 		}
 	}
 	return $the_html;

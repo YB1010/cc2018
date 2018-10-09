@@ -1,6 +1,12 @@
 <! DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+	<script
+	  src="https://code.jquery.com/jquery-3.1.1.min.js"
+	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	  crossorigin="anonymous"></script>
+	<script src="semantic/dist/semantic.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<title>Weather on Calendar</title>
 </head>
@@ -27,10 +33,32 @@
 	
 	//if loged
 	else { ?>
-	
-		<button id="LogOut" >Log Out</button>
-		<h3>Up comming event:</h3>
-		<p id='dump'></p>
+
+<div id="wrapper" style="margin-left:auto;margin-right:auto;margin-top:auto;width:1024;">
+<div id="nav" class="ui inverted menu">
+  <a class="active red item">
+    Upcomming Events
+  </a>
+
+  <div class="right menu">
+
+    <a class="ui item" id="LogOut">
+      Logout
+    </a>
+  </div> 
+</div>
+<div id="dump" style="width:99%;margin-left:auto;margin-right:auto;">
+<div class="ui active inverted dimmer">
+    <div class="ui huge text loader">Loading</div>
+  </div>
+
+
+</div>
+
+
+</div>
+
+</div>
 		
 		<script>
 			//logout function
@@ -48,7 +76,6 @@
 			
 			//get the calendars
 			function get_times(date_picker){
-				console.log("121123");
 				var date = date_picker.value;
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function(){
@@ -61,7 +88,7 @@
 				xhttp.setRequestHeader('X-Requested-With','xmlhttprequest');
 				xhttp.send();
 			}
-			
+
 		</script>
 	<?php }
 	?>

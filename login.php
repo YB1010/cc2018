@@ -5,19 +5,24 @@ require __DIR__ . '/google-api-php-client-2.2.2/vendor/autoload.php';
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
  */
+
 function getClient()
 {
+	$db = mysqli_connect('cc2018.crajycjons9n.us-east-1.rds.amazonaws.com','cc', 'cccccccc','cc2018','3000');
+	if (mysqli_connect_errno()) echo "Failed to connect to MySQL: " . mysqli_connect_error();
+
     $client = new Google_Client();
     $client->setApplicationName('Google Calendar API PHP Quickstart');
     $client->setScopes(Google_Service_Calendar::CALENDAR);
     $client->setAuthConfig('client_secret_690726870203-mt1s63knt375nt9j97s0pbrvjbc7hkfe.apps.googleusercontent.com.json');
     $client->setAccessType('offline');
-	$client->setPrompt('select_account');
     // Load previously authorized token from a file, if it exists.
-    $tokenPath = 'token.json';
-    if (file_exists($tokenPath)) {
-        $accessToken = json_decode(file_get_contents($tokenPath), true);
-        $client->setAccessToken($accessToken);
+	$username = $_SESSION['username'];
+	$queryForTokem = "SELECT refreshToken FROM users WHERE username= '$username' LIMIT 1";
+	$sqlToken = mysqli_fetch_assoc(mysqli_query($db, $queryForTokem));
+
+    if ($sqlToken['refreshToken']!=null) {
+        $client->setAccessToken($client->fetchAccessTokenWithRefreshToken($sqlToken));
     }
 
     // If there is no previous token or it's expired.
@@ -41,10 +46,16 @@ function getClient()
             }
         }
         // Save the token to a file.
-        if (!file_exists(dirname($tokenPath))) {
-            mkdir(dirname($tokenPath), 0700, true);
-        }
-        file_put_contents($tokenPath, json_encode($client->getAccessToken()));
+
+		$refreshToken = $client->getRefreshToken();
+		if($refreshToken!=null){
+		$saveQuery="UPDATE users SET refreshToken = '$refreshToken' WHERE username = '$username'";
+		mysqli_query($db,$saveQuery);
+		}
+		else
+		{
+			
+		}
     }
     return $client;
 }
