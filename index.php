@@ -11,6 +11,19 @@
 	<title>Weather on Calendar</title>
 </head>
 <body>
+<div id="wrapper" style="margin-left:auto;margin-right:auto;margin-top:auto;width:1024;">
+<div id="nav" class="ui inverted menu">
+  <a class="active red item">
+    Upcomming Events
+  </a>
+
+  <div class="right menu">
+
+    <a href="logout.php" class="ui item" id="LogOut">
+      Logout
+    </a>
+  </div> 
+</div>
 	<?php
 
   session_start(); 
@@ -34,19 +47,7 @@
 	//if loged
 	else { ?>
 
-<div id="wrapper" style="margin-left:auto;margin-right:auto;margin-top:auto;width:1024;">
-<div id="nav" class="ui inverted menu">
-  <a class="active red item">
-    Upcomming Events
-  </a>
 
-  <div class="right menu">
-
-    <a class="ui item" id="LogOut">
-      Logout
-    </a>
-  </div> 
-</div>
 <div id="dump" style="width:99%;margin-left:auto;margin-right:auto;">
 <div class="ui active inverted dimmer">
     <div class="ui huge text loader">Loading</div>
@@ -56,10 +57,7 @@
 </div>
 
 
-</div>
 
-</div>
-		
 		<script>
 			//logout function
 			document.getElementById("LogOut").onclick = function () {
@@ -92,5 +90,7 @@
 		</script>
 	<?php }
 	?>
+	
+</div>
 </body>
 </html>

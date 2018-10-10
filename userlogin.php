@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Registration system PHP and MySQL</title>
+  <title>Weather Recommendation</title>
   	<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
 	<link rel="stylesheet" type="text/css" href="css/cc2018.css">
 	<script

@@ -33,7 +33,14 @@ function getClient()
         } else {
             if(!credentials_in_browser()){
 				$authUrl = $client->createAuthUrl();
-				return "<a href='$authUrl'>Click Here to link ur google</a><p> <a href=\"index.php?logout=\'1\'\" style=\"color: red;\">logout</a> </p>";
+				return "<div class=\"ui placeholder segment\">
+						  <div class=\"ui icon header\">
+							<i class=\"google icon\"></i>
+							No Event import From Google Calendar.
+						  </div>
+						  <a href=\"$authUrl\"><div class=\"ui primary button\">Link to Your Google Calendar</div></a>
+						</div>
+						";
 			}
 			$authCode = $_GET['code'];
             // Exchange authorization code for an access token.
