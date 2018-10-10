@@ -38,22 +38,23 @@ function get_times(){
 		{	
 			$locationStr='';
 			
-			$the_html.="<div class=\"ui segment\">
-			<div class=\"ui stackable four column grid\">
-			<div class=\"column\ style=\"width:69%;\">";
+			$the_html.="<div class=\"ui segments\">
+			<div class=\"ui segment\">";
 			$start = $event->start->dateTime;
 			if(empty($start)){
 				//if no specific dateTime, date will as date
 				$start = $event->start->date;
 			}
-			$the_html.="<h3> Description:".$event->getSummary();
-			$the_html.="<br/ >";
-			$the_html.="<h3>Date: ".$start;
-			$the_html.="<br/ >";
+			if($event->getSummary()!=null){
+				$the_html.="<h3>".$event->getSummary()."</h3></div>";
+			}
+			else{
+				$the_html.="<h3>No title</h3></div>";
+			}
+			$the_html.="<div class=\"ui horizontal segments\"><div class=\"ui segment\">".$start;
 			if($event->getLocation()!=""){
 				$locationStr=$event->getLocation();
-				$the_html.="<h3>Location: ".$event->getLocation()."<h3>";
-				
+				$the_html.="<br/><h3>Location: ".$event->getLocation()."<h3>";
 				$dateTime = explode("+",$start);
 				$json_url = "https://on0gw9htij.execute-api.us-east-1.amazonaws.com/prod/?address=".str_replace(" ","+",$event->getLocation())."&time=".$dateTime[0];
 				
@@ -63,10 +64,9 @@ function get_times(){
 				{
 					$the_html.="<br/>";
 					$the_html.="<h3>temperature: ".$data["temperature"];
-					$the_html.="</h3><br/>";
-					$the_html.="<h3>Summary: ".$data["summary"]."</h3>";
+					$the_html.="</h3>";
 					
-					$the_html.="</div><div class=\"column\"><img width=\"100%\" src=\"".$data["iconUrl"]."\" />";
+					$the_html.="</div><div class=\"ui segment\" min-width=\"30%\">".$data["summary"]."<img width=\"100%\" src=\"".$data["iconUrl"]."\" />";
 				}
 				else
 				{

@@ -4,6 +4,8 @@
 <head>
   <title>Weather Recommendation</title>
   	<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="css/index.css">
 	<link rel="stylesheet" type="text/css" href="css/cc2018.css">
 	<script
 	  src="https://code.jquery.com/jquery-3.1.1.min.js"

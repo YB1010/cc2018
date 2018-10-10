@@ -2,6 +2,7 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
 	<script
 	  src="https://code.jquery.com/jquery-3.1.1.min.js"
 	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -11,9 +12,10 @@
 	<title>Weather on Calendar</title>
 </head>
 <body>
+<div class="land_background">
 <div id="wrapper" style="margin-left:auto;margin-right:auto;margin-top:auto;width:1024;">
-<div id="nav" class="ui inverted menu">
-  <a class="active red item">
+<div id="nav" class="ui huge menu">
+  <a class="active item">
     Upcomming Events
   </a>
 
@@ -91,6 +93,7 @@
 	<?php }
 	?>
 	
+</div>
 </div>
 </body>
 </html>

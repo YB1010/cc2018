@@ -1,0 +1,9 @@
+body{
+	 background-image: url(../image/back.png);
+	 background-repeat:no-repeat;
+	 background-size: cover;
+}
+.ui.horizontal.segments>.segment {
+	background-color: #fff;
+	min-width: 30%;
+}
