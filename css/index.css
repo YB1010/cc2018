@@ -7,3 +7,7 @@ body{
 	background-color: #fff;
 	min-width: 30%;
 }
+.ui.horizontal.segments>.center.aligned.segment{
+	background-color: #fff;
+	max-width: 30%;
+}

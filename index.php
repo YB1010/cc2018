@@ -42,11 +42,13 @@
 
 	require_once('./login.php');
 	$client = getclient(); // Call getclient in login.php to login
+	
+	//if  user haven't linked to Google calendar
 	if(! is_a($client,"Google_Client")){
 		echo $client;
 	}
 	
-	//if loged
+	//if linked
 	else { ?>
 
 
@@ -61,22 +63,16 @@
 
 
 		<script>
-			//logout function
-			document.getElementById("LogOut").onclick = function () {
-			location.href = "http://localhost/cc2018/logout.php";
-			};
+			console.log("From server 2");
 			$(document).ready(function(){
 				
 					get_times(this);
 				
-				//document.getElementById('submit').addEventListener('click', function(){
-				//	schedule_me(this);
-				//});
+
 			});
 			
-			//get the calendars
 			function get_times(date_picker){
-				var date = date_picker.value;
+			
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function(){
 					if(this.readyState == 4 && this.status == 200){
@@ -84,7 +80,8 @@
 						
 					}
 				};
-				xhttp.open('GET','calendars.php?action=get_times&date='+date + '&t=' + Math.random());
+				// call the calendars.php to render the event details as html.
+				xhttp.open('GET','calendars.php?action=get_times');
 				xhttp.setRequestHeader('X-Requested-With','xmlhttprequest');
 				xhttp.send();
 			}

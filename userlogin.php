@@ -37,7 +37,7 @@
 		
   		<button type="submit" class="ui primary button" name="login_user">Login</button>
       </div>
-	  
+<script>console.log('From server 1')</script>	  
   </form>
     </div>
     <div class="middle aligned column">

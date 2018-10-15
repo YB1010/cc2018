@@ -1,9 +1,9 @@
 <?php
-require __DIR__ . '/google-api-php-client-2.2.2/vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
 /**
  * Returns an authorized API client.
- * @return Google_Client the authorized client object
+ * return Google_Client the authorized client object
  */
 
 function getClient()
@@ -16,7 +16,7 @@ function getClient()
     $client->setScopes(Google_Service_Calendar::CALENDAR);
     $client->setAuthConfig('client_secret_690726870203-mt1s63knt375nt9j97s0pbrvjbc7hkfe.apps.googleusercontent.com.json');
     $client->setAccessType('offline');
-    // Load previously authorized token from a file, if it exists.
+    // Load previously authorized token from a database, if it exists.
 	$username = $_SESSION['username'];
 	$queryForTokem = "SELECT refreshToken FROM users WHERE username= '$username' LIMIT 1";
 	$sqlToken = mysqli_fetch_assoc(mysqli_query($db, $queryForTokem));
@@ -52,9 +52,9 @@ function getClient()
                 throw new Exception(join(', ', $accessToken));
             }
         }
-        // Save the token to a file.
 
 		$refreshToken = $client->getRefreshToken();
+		//save the token to database
 		if($refreshToken!=null){
 		$saveQuery="UPDATE users SET refreshToken = '$refreshToken' WHERE username = '$username'";
 		mysqli_query($db,$saveQuery);
@@ -68,7 +68,6 @@ function getClient()
 }
 
 
-//=================
 function credentials_in_browser(){
 	if(isset($_GET['code'])) 
 		return true;
